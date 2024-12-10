@@ -3,7 +3,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-// Визначення GPIO для сегментів (a, b, c, d, e, f, g) та розрядів
+// GPIO definitions for segments (a, b, c, d, e, f, g) and digits
 #define SEG_A GPIO_NUM_23
 #define SEG_B GPIO_NUM_22
 #define SEG_C GPIO_NUM_21
@@ -17,7 +17,7 @@
 #define DIGIT_3 GPIO_NUM_25
 #define DIGIT_4 GPIO_NUM_26
 
-// Таблиця сегментів для цифр 0-9 (1 - увімкнено, 0 - вимкнено)
+// Segment table for numbers 0-9
 const uint8_t digit_segments[10] = {
     0b00111111, // 0
     0b00000110, // 1
@@ -31,53 +31,53 @@ const uint8_t digit_segments[10] = {
     0b01101111  // 9
 };
 
-// Масив пінів для сегментів
+// Array of pins for segments
 const gpio_num_t segment_pins[] = {
     SEG_A, SEG_B, SEG_C, SEG_D, SEG_E, SEG_F, SEG_G
 };
 
-// Масив пінів для розрядів
+// Array of pins for digits
 const gpio_num_t digit_pins[] = {
     DIGIT_1, DIGIT_2, DIGIT_3, DIGIT_4
 };
 
-// Ініціалізація GPIO
+// GPIO initialization
 void init_gpio() {
-    // Налаштування пінів для сегментів
+    // Set pins for segments
     for (int i = 0; i < 7; i++) {
         gpio_reset_pin(segment_pins[i]);
         gpio_set_direction(segment_pins[i], GPIO_MODE_OUTPUT);
-        gpio_set_level(segment_pins[i], 0); // Вимкнути сегменти
-        gpio_set_pull_mode(segment_pins[i], GPIO_PULLDOWN_ONLY); // Активувати пулдаун
+        gpio_set_level(segment_pins[i], 0);
+        gpio_set_pull_mode(segment_pins[i], GPIO_PULLDOWN_ONLY);
     }
-    // Налаштування пінів для розрядів
+    // Set pins for digits
     for (int i = 0; i < 4; i++) {
         gpio_reset_pin(digit_pins[i]);
         gpio_set_direction(digit_pins[i], GPIO_MODE_OUTPUT);
-        gpio_set_level(digit_pins[i], 1); // Вимкнути розряди (для загального аноду)
+        gpio_set_level(digit_pins[i], 1);
     }
 }
 
-// Виведення однієї цифри на один розряд
+// Output one digit per digit
 void display_digit(int digit, int position) {
-    // Вимкнути всі сегменти перед зміною розряду
+    // Turn off all segments before changing the digit
     for (int i = 0; i < 7; i++) {
         gpio_set_level(segment_pins[i], 0);
     }
 
-    // Увімкнути відповідний розряд
+    // Enable need digit
     for (int i = 0; i < 4; i++) {
-        gpio_set_level(digit_pins[i], i == position ? 0 : 1); // 0 - активний
+        gpio_set_level(digit_pins[i], i == position ? 0 : 1);
     }
 
-    // Увімкнути сегменти для цифри
+    // Enable need segments
     uint8_t segments = digit_segments[digit];
     for (int i = 0; i < 7; i++) {
         gpio_set_level(segment_pins[i], (segments >> i) & 1);
     }
 }
 
-// Головний цикл для мультиплексування
+// Main loop for multiplexing
 void display_task(void *param) {
     int *counter = (int *)param;
 
@@ -89,33 +89,31 @@ void display_task(void *param) {
             *counter % 10
         };
 
-        // По черзі виводимо кожну цифру
         for (int i = 0; i < 4; i++) {
             display_digit(digits[i], i);
-            vTaskDelay(pdMS_TO_TICKS(5)); // Час для оновлення розряду
+            vTaskDelay(pdMS_TO_TICKS(5)); // Time to update bit
         }
     }
 }
 
-// Задача для збільшення лічильника
+// Task to increase the counter
 void counter_task(void *param) {
     int *counter = (int *)param;
 
     while (1) {
         (*counter)++;
         if (*counter > 9999) {
-            *counter = 0; // Скидання до 0000
+            *counter = 0; // Reset
         }
-        vTaskDelay(pdMS_TO_TICKS(1000)); // Інтервал в 1 секунду
+        vTaskDelay(pdMS_TO_TICKS(1000)); // Interval of 1 second
     }
 }
 
 void app_main() {
-    static int counter = 0; // Початкове значення лічильника
+    static int counter = 0; // The initial value of the counter
 
     init_gpio();
 
-    // Створення задач для відображення та лічильника
     xTaskCreate(display_task, "display_task", 2048, &counter, 1, NULL);
     xTaskCreate(counter_task, "counter_task", 2048, &counter, 1, NULL);
 }
