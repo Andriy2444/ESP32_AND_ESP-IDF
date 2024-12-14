@@ -6,7 +6,7 @@ This repository contains my ESP32 projects, developed using VS Code with the ESP
 
 
 ## **My project**
--Counter
+- Counter
 
 
 ## **Getting Started**
@@ -22,8 +22,8 @@ cd ESP32_AND_ESP-ID
 
 
 ## **Dependencies**
---ESP-IDF: The official development framework for ESP32.
---CMake: Build system generator.
+- ESP-IDF: The official development framework for ESP32.
+- CMake: Build system generator.
   
 ## **Contributing**
 Contributions are welcome! If you have suggestions for improvements or new features, feel free to open an issue or submit a pull request.
