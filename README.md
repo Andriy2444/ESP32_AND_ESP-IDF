@@ -9,15 +9,48 @@ This repository contains my ESP32 projects, developed using VS Code with the ESP
 - Counter
 
 
-## **Getting Started**
-You need to configure your IDE to work with ESP32.
+# **Getting Started**
+
+Make sure you have the following set up before using this code:
 
 
-### **Clone the Repository:**
+## **ESP-IDF Installed**
+- Follow the official ESP-IDF setup guide
+- Install the appropriate version of ESP-IDF(v5.3.1)
+
+
+## **Software Tools**
+- A terminal or command-line tool (e.g., PowerShell, bash, or cmd).
+- IDE or text editor (e.g., Visual Studio Code, with ESP-IDF plugin if preferred).
+- Python installed on your system(3.12.8).
+
+
+## **Setting Up the Project**
+Clone or download the repository:
 ```bash
 git clone https://github.com/Andriy2444/ESP32_AND_ESP-IDF.git
 cd ESP32_AND_ESP-ID
 ```
+
+Configure ESP-IDF environment:
+```bash
+. ./export.sh   # Linux/macOS  
+export.bat      # Windows  
+```
+
+Configure the project:
+```bash
+idf.py menuconfig
+```
+
+Build and flash the code:
+```bash
+idf.py build  
+idf.py flash 
+```
+
+
+
 
 
 
