@@ -1,11 +1,11 @@
 # **ESP32-ESP-IDF**
 
 ## **Navigation**
-- [Overview](Overview)
-- [My project](My project)
-- [Getting Started](Getting Started)
-- [Disclaimer](Disclaimer)
-- [Contributing](Contributing)
+- [Overview](#Overview)
+- [My project](#My-project)
+- [Getting Started](#Getting-Started)
+- [Disclaimer](#Disclaimer)
+- [Contributing](#Contributing)
 
 
 
