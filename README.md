@@ -15,7 +15,7 @@ This repository contains my ESP32 projects, developed using VS Code with the ESP
 
 
 ## **My project**
-- [Counter](Counter)
+- [Counter](#Counter)
 
 
 
