@@ -2,6 +2,21 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## **Overview**
 This repository contains my ESP32 projects, developed using VS Code with the ESP-IDF extension. The projects are organized into separate folders, making it easy to switch between them.
 
