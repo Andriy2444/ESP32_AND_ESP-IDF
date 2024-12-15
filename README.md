@@ -1,19 +1,11 @@
 # **ESP32-ESP-IDF**
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## **Navigation**
+- [Overview](Overview)
+- [My project](My project)
+- [Getting Started](Getting Started)
+- [Disclaimer](Disclaimer)
+- [Contributing](Contributing)
 
 
 
@@ -23,7 +15,7 @@ This repository contains my ESP32 projects, developed using VS Code with the ESP
 
 
 ## **My project**
-- Counter.
+- [Counter](Counter)
 
 
 
@@ -88,7 +80,7 @@ This is a counter that displays numbers from 0000 to 9999 and starts over, infor
 
 
 Additional components:
-- 4-digit 7-segment display(Pin out from ./Pinout/4-digit-display.png).
+- 4-digit 7-segment display([Pinout](./Pinout/4-digit-display.png)).
   
 GPIO(you can change for yourself):
 - SEG_A GPIO_NUM_23
