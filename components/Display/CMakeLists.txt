@@ -1,4 +1,3 @@
 idf_component_register(SRCS "display.c"
-                    INCLUDE_DIRS "."
-                    REQUIRES    driver
-                    )
+                    INCLUDE_DIRS "include"
+                    REQUIRES driver)
