@@ -4,6 +4,7 @@
 - [Overview](#Overview)
 - [My project](#My-project)
 - [Getting Started](#Getting-Started)
+- [Components Details](#Components-Details)
 - [Disclaimer](#Disclaimer)
 - [Contributing](#Contributing)
 
@@ -51,7 +52,7 @@ Make sure you have the following set up before using this code:
 Clone or download the repository:
 ```bash
 git clone https://github.com/Andriy2444/ESP32_AND_ESP-IDF.git
-cd ESP32_AND_ESP-ID
+cd ESP32_AND_ESP-IDF
 ```
 
 Configure ESP-IDF environment:
@@ -63,6 +64,11 @@ export.bat      # Windows
 Configure the project:
 ```bash
 idf.py menuconfig
+```
+
+Select the project you want to run
+```bash
+cd (PROJECT NAME)
 ```
 
 Build and flash the code:
@@ -81,30 +87,29 @@ This is a counter that displays numbers from 0000 to 9999 and starts over, infor
 
 
 Additional components:
-- 4-digit 7-segment display([Pinout](./Pinout/4-digit-display.png)).
+- [4-digit 7-segment display](#Display).
   
-GPIO(you can change for yourself):
-- SEG_A GPIO_NUM_23
-- SEG_B GPIO_NUM_22
-- SEG_C GPIO_NUM_21
-- SEG_D GPIO_NUM_19
-- SEG_E GPIO_NUM_18
-- SEG_F GPIO_NUM_5
-- SEG_G GPIO_NUM_4
 
-- DIGIT_1 GPIO_NUM_33
-- DIGIT_2 GPIO_NUM_32
-- DIGIT_3 GPIO_NUM_25
-- DIGIT_4 GPIO_NUM_26
 
 ## **Timer**
 This project implements a countdown timer with buttons to increment and decrement the displayed value. The buttons allow for normal and rapid adjustments, with the speed of changes increasing as the buttons are held down. The timer starts when the "Start" button is pressed, and it counts down from the current value of the counter.
 
 Additional components:
-- 4-digit 7-segment display([Pinout](./Pinout/4-digit-display.png)).
+- [4-digit 7-segment display](#Display).
 - 3 button(INC, DEC, Start).
 
 GPIO(you can change for yourself):
+
+- BTN_INC GPIO_NUM_27
+- BTN_DEC GPIO_NUM_14
+- BTN_START GPIO_NUM_12
+
+# **Components Details**
+
+## **Display**
+This component allows you to control a 4-digit 7-segment display([Pinout](./Pinout/4-digit-display.png)) using ESP32 and ESP-IDF. It enables you to display numbers or other information on a 4-digit 7-segment display, useful for digital clocks, counters, or numerical indicators.
+
+### GPIO(you can change for yourself):
 - SEG_A GPIO_NUM_23
 - SEG_B GPIO_NUM_22
 - SEG_C GPIO_NUM_21
@@ -118,10 +123,9 @@ GPIO(you can change for yourself):
 - DIGIT_3 GPIO_NUM_25
 - DIGIT_4 GPIO_NUM_26
 
-- BTN_INC GPIO_NUM_27
-- BTN_DEC GPIO_NUM_14
-- BTN_START GPIO_NUM_12
-
+### How to use
+- Call init_gpio_display(): Initialize the GPIO pins for the display.
+- Create a Task: Use display_task() to continuously display a number on the 4-digit display.
 
 # **Disclaimer**
 This code has been tested and verified to work with ESP-IDF version v5.3.1, Python 3.12.8 and VS Code 1.95.3.
