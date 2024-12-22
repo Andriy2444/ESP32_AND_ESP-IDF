@@ -125,7 +125,7 @@ This component allows you to control a 4-digit 7-segment display([Pinout](./Pino
 
 ### How to use
 - Call init_gpio_display(): Initialize the GPIO pins for the display.
-- Create a Task: Use display_task() to continuously display a number on the 4-digit display.
+- Create a Task: display_task() to continuously display a number on the 4-digit display.
 
 # **Disclaimer**
 This code has been tested and verified to work with ESP-IDF version v5.3.1, Python 3.12.8 and VS Code 1.95.3.
