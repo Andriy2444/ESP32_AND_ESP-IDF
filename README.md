@@ -27,20 +27,20 @@ Make sure you have the following set up before using this code:
 
 
 
-## **ESP-IDF Installed**
+### **ESP-IDF Installed**
 - Follow the official ESP-IDF setup guide.
 - Install the appropriate version of ESP-IDF(v5.3.1).
 
 
 
-## **Software Tools**
+### **Software Tools**
 - A terminal or command-line tool (e.g., PowerShell, bash, or cmd).
 - IDE or text editor (e.g., Visual Studio Code, with ESP-IDF plugin).
 - Python installed on your system(3.12.8).
 
 
 
-## **Hardware Requirements**
+### **Hardware Requirements**
 - ESP32 development board.
 - USB cable for flashing.
 - Additional components used in the project.
@@ -48,7 +48,7 @@ Make sure you have the following set up before using this code:
 
 
 
-## **Setting Up the Project**
+### **Setting Up the Project**
 Clone or download the repository:
 ```bash
 git clone https://github.com/Andriy2444/ESP32_AND_ESP-IDF.git
