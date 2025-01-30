@@ -87,10 +87,76 @@ void ws2812b_snake_effect_with_colors() {
     }
 }
 
+void ws2812b_gradient_effect(led_color_t start_color, led_color_t end_color, int steps, int delay_ms) {
+    led_color_t colors[LED_COUNT];
+
+    float step_r = (float)(end_color.r - start_color.r) / (LED_COUNT - 1);
+    float step_g = (float)(end_color.g - start_color.g) / (LED_COUNT - 1);
+    float step_b = (float)(end_color.b - start_color.b) / (LED_COUNT - 1);
+
+    for (int i = 0; i < LED_COUNT; i++) {
+        colors[i].r = start_color.r + (int)(step_r * i);
+        colors[i].g = start_color.g + (int)(step_g * i);
+        colors[i].b = start_color.b + (int)(step_b * i);
+    }
+
+    while (true) {
+        // Відправляємо кольори на стрічку
+        ws2812b_send_pixels(colors, LED_COUNT);
+        vTaskDelay(delay_ms / portTICK_PERIOD_MS);
+
+        // Зсуваємо всі кольори вправо (останній колір переходить на перше місце)
+        led_color_t last = colors[LED_COUNT - 1];
+        for (int i = LED_COUNT - 1; i > 0; i--) {
+            colors[i] = colors[i - 1];
+        }
+        colors[0] = last; // Переміщаємо останній елемент на початок
+    }
+}
+
+
+void ws2812b_smooth_snake() {
+    led_color_t colors[LED_COUNT] = {0}; // Масив кольорів
+    
+    led_color_t snake_colors[] = {
+        {255, 0, 0},   // Червоний
+        {0, 255, 0},   // Зелений
+        {0, 0, 255}    // Синій
+    };
+    int num_colors = sizeof(snake_colors) / sizeof(snake_colors[0]);
+
+    int position = 0; // Початкова позиція
+
+    while (true) {
+        // Оновлюємо кольори для ефекту змійки
+        for (int i = 0; i < LED_COUNT; i++) {
+            // Плавне згасання кольору (ефект сліду)
+            colors[i].r = colors[i].r * 0.5;
+            colors[i].g = colors[i].g * 0.5;
+            colors[i].b = colors[i].b * 0.5;
+        }
+
+        // Додаємо новий "головний" колір змійки
+        colors[position] = snake_colors[position % num_colors];
+
+        // Відправляємо дані на стрічку
+        ws2812b_send_pixels(colors, LED_COUNT);
+
+        // Зсуваємо позицію змійки
+        position = (position + 1) % LED_COUNT;
+
+        // Час оновлення (чим менше, тим плавніше)
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+}
+
+
 void app_main(void) {
     ws2812b_init();
 
-    while (true) {
-        ws2812b_snake_effect_with_colors();
-    }
+    ws2812b_gradient_effect((led_color_t){255, 0, 0}, (led_color_t){0, 0, 255}, LED_COUNT, 50);
+
+    // while (true) {
+    //     ws2812b_smooth_snake();
+    // }
 }
