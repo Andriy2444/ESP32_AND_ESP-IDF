@@ -6,19 +6,16 @@
 #include "driver/gpio.h"
 #include "esp_err.h"
 
-// Конфігурація
-#define LED_PIN 5       // GPIO для WS2812B
-#define LED_COUNT 12    // Кількість світлодіодів
-#define RMT_CHANNEL 0   // Канал RMT
+#define LED_PIN 5 
+#define LED_COUNT 12   
+#define RMT_CHANNEL 0   
 
-// Структура кольору
 typedef struct {
     uint8_t r;
     uint8_t g;
     uint8_t b;
 } led_color_t;
 
-// Ініціалізація RMT
 static rmt_channel_handle_t rmt_tx_channel = NULL;
 static rmt_encoder_handle_t rmt_ws2812_encoder = NULL;
 
@@ -42,11 +39,10 @@ void ws2812b_init() {
     ESP_ERROR_CHECK(rmt_enable(rmt_tx_channel));
 }
 
-// Відправлення кольорів
 void ws2812b_send_pixels(led_color_t *colors, int count) {
     uint8_t buffer[count * 3];
     for (int i = 0; i < count; i++) {
-        buffer[i * 3] = colors[i].g;  // WS2812B використовує GRB
+        buffer[i * 3] = colors[i].g;
         buffer[i * 3 + 1] = colors[i].r;
         buffer[i * 3 + 2] = colors[i].b;
     }
@@ -62,9 +58,9 @@ void ws2812b_snake_effect_with_colors() {
     led_color_t colors[LED_COUNT] = {0};
 
     led_color_t snake_colors[] = {
-        {255, 0, 0},   // Червоний
-        {0, 255, 0},   // Зелений
-        {0, 0, 255},   // Синій
+        {255, 0, 0},   // Red
+        {0, 255, 0},   // Green
+        {0, 0, 255},   // Blue
     };
 
     int num_colors = sizeof(snake_colors) / sizeof(snake_colors[0]);
